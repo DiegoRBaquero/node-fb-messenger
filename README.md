@@ -1,4 +1,4 @@
-# node-fb-messenger
+# node-fb-messenger [![npm](https://img.shields.io/npm/v/fb-messenger.svg)](https://www.npmjs.com/package/fb-messenger) [![npm](https://img.shields.io/npm/dm/fb-messenger.svg)](https://www.npmjs.com/package/fb-messenger) [![npm](https://img.shields.io/npm/l/fb-messenger.svg)](LICENSE)
 #### Facebook Messenger Platform NodeJS API Wrapper
 
 ## Installation
@@ -23,7 +23,10 @@ After you have required fb-messenger and created an instance you can use the fol
 ```js
 messenger.sendTextMessage(id, message, cb) // Sends a text message
 messenger.sendImageMessage(id, imageURL, cb) // Sends an image from URL
-messenger.sendHScrollMessage(id, elements, cb) // Sends an H-SCroll Generic Message
+messenger.sendGenericMessage(id, elements, cb) // Sends an H-Scroll generic message
+messenger.sendHScrollMessage(id, elements, cb) // Sends an H-SCroll generic message (Alias)
+messenger.sendButtonsMessage(id, message, buttons, cb) // Sends a buttons message
+messenger.sendButtonMessage(id, message, buttons, cb) // Sends a buttons message (Alias)
 messenger.sendMessage(id, messageData, cb) // Send a message from custom data
 ```
 
@@ -41,3 +44,7 @@ messenger.sendTextMessage(<ID>, 'Hola', function (err, body) {
   console.log(body)
 })
 ```
+
+## License
+
+MIT. Copyright (c) [Diego Rodríguez Baquero](https://diegorbaquero.com).

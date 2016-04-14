@@ -23,6 +23,7 @@ FacebookMessenger.prototype.sendImageMessage = function (id, imageURL, cb) {
   this.sendMessage(id, messageData, cb)
 }
 
+FacebookMessenger.prototype.sendGenericMessage =
 FacebookMessenger.prototype.sendHScrollMessage = function (id, elements, cb) {
   var messageData = {
     'attachment': {
@@ -30,6 +31,21 @@ FacebookMessenger.prototype.sendHScrollMessage = function (id, elements, cb) {
       'payload': {
         'template_type': 'generic',
         'elements': elements
+      }
+    }
+  }
+  this.sendMessage(id, messageData, cb)
+}
+
+FacebookMessenger.prototype.sendButtonMessage =
+FacebookMessenger.prototype.sendButtonsMessage = function (id, text, buttons, cb) {
+  var messageData = {
+    'attachment': {
+      'type': 'template',
+      'payload': {
+        'template_type': 'button',
+        'text': text,
+        'buttons': buttons
       }
     }
   }
@@ -48,11 +64,19 @@ FacebookMessenger.prototype.sendMessage = function (id, data, cb) {
   }
   request(req, function (err, res, body) {
     if (err) {
-      console.error('Error sending message: ', err)
+      process.nextTick(function () {
+        cb(err, null)
+      })
+      return
     } else if (body.error) {
-      console.error('Error: ', body.error)
+      process.nextTick(function () {
+        cb(body.error, null)
+      })
+      return
     }
-    cb(err, body)
+    process.nextTick(function () {
+      cb(null, body)
+    })
   })
 }
 
