@@ -1,6 +1,6 @@
 {
   "name": "fb-messenger",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Facebook Messenger Platform API",
   "main": "index.js",
   "scripts": {
