@@ -63,6 +63,7 @@ FacebookMessenger.prototype.sendMessage = function (id, data, cb) {
     }
   }
   request(req, function (err, res, body) {
+    if (!cb) return
     if (err) {
       process.nextTick(function () {
         cb(err, null)
