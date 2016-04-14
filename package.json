@@ -1,0 +1,29 @@
+{
+  "name": "fb-messenger",
+  "version": "0.0.0",
+  "description": "Facebook Messenger Platform API",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && node test.js"
+  },
+  "keywords": [
+    "facebook",
+    "messenger",
+    "graph",
+    "api",
+    "platform"
+  ],
+  "author": "Diego Rodriguez Baquero",
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^6.0.8",
+    "tape": "^4.5.1"
+  },
+  "dependencies": {
+    "request": "^2.71.0"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/DiegoRBaquero/node-fb-messenger.git"
+  }
+}
