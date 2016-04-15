@@ -52,6 +52,17 @@ FacebookMessenger.prototype.sendButtonsMessage = function (id, text, buttons, cb
   this.sendMessage(id, messageData, cb)
 }
 
+FacebookMessenger.prototype.sendReceiptMessage = function (id, payload, cb) {
+  payload.template_type = 'receipt'
+  var messageData = {
+    'attachment': {
+      'type': 'template',
+      'payload': payload
+    }
+  }
+  this.sendMessage(id, messageData, cb)
+}
+
 FacebookMessenger.prototype.sendMessage = function (id, data, cb) {
   var req = {
     url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -65,19 +76,13 @@ FacebookMessenger.prototype.sendMessage = function (id, data, cb) {
   request(req, function (err, res, body) {
     if (!cb) return
     if (err) {
-      process.nextTick(function () {
-        cb(err, null)
-      })
+      cb(err, null)
       return
     } else if (body.error) {
-      process.nextTick(function () {
-        cb(body.error, null)
-      })
+      cb(body.error, null)
       return
     }
-    process.nextTick(function () {
-      cb(null, body)
-    })
+    cb(null, body)
   })
 }
 
