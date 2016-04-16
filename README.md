@@ -4,7 +4,7 @@
 ## Installation
 
 ```bash
-npm i fb-messenger --save
+npm install fb-messenger --save
 ```
 
 ## Usage
@@ -12,8 +12,8 @@ npm i fb-messenger --save
 In your node program:
 
 ```js
-var FacebookMessenger = require('fb-messenger')
-var messenger = new FacebookMessenger(<YOUR TOKEN>)
+var FBMessenger = require('fb-messenger')
+var messenger = new FBMessenger(<YOUR TOKEN>)
 ```
 
 ## API
@@ -34,20 +34,24 @@ messenger.sendButtonMessage(id, message, buttons[, cb]) // Sends a buttons messa
 messenger.sendReceiptMessage(id, payload[, cb]) // Sends a receipt message (No need for template_type in payload) 
 
 messenger.sendMessage(id, messageData[, cb]) // Send a message from custom data
+
+messenger.getProfile(id, cb) // Gets user information
 ```
 
 ## Example
 
 ```js
-var FacebookMessenger = require('fb-messenger')
-var messenger = new FacebookMessenger(<YOUR TOKEN>)
+var FBMessenger = require('fb-messenger')
+var messenger = new FBMessenger(<YOUR TOKEN>)
 
 messenger.sendTextMessage(<ID>, 'Hello', function (err, body) {
-  if (err) {
-    console.error(err)
-    return
-  }
+  if (err) return console.error(err)
   console.log(body) // Prints { "recipient_id": <rid>, "message_id": <mid> }
+})
+
+messenger.getProfile(<ID>, function (err, body) {
+  if (err) return console.error(err)
+  console.log(body) // Prints { first_name: XXXXX, last_name: YYYYYY, profile_pic: IMAGE_URL}
 })
 ```
 

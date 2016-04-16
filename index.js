@@ -1,17 +1,17 @@
 var request = require('request')
 
-function FacebookMessenger (token) {
+function FBMessenger (token) {
   this.token = token
 }
 
-FacebookMessenger.prototype.sendTextMessage = function (id, text, cb) {
+FBMessenger.prototype.sendTextMessage = function (id, text, cb) {
   var messageData = {
     text: text
   }
   this.sendMessage(id, messageData, cb)
 }
 
-FacebookMessenger.prototype.sendImageMessage = function (id, imageURL, cb) {
+FBMessenger.prototype.sendImageMessage = function (id, imageURL, cb) {
   var messageData = {
     'attachment': {
       'type': 'image',
@@ -23,8 +23,8 @@ FacebookMessenger.prototype.sendImageMessage = function (id, imageURL, cb) {
   this.sendMessage(id, messageData, cb)
 }
 
-FacebookMessenger.prototype.sendGenericMessage =
-FacebookMessenger.prototype.sendHScrollMessage = function (id, elements, cb) {
+FBMessenger.prototype.sendGenericMessage =
+FBMessenger.prototype.sendHScrollMessage = function (id, elements, cb) {
   var messageData = {
     'attachment': {
       'type': 'template',
@@ -37,8 +37,8 @@ FacebookMessenger.prototype.sendHScrollMessage = function (id, elements, cb) {
   this.sendMessage(id, messageData, cb)
 }
 
-FacebookMessenger.prototype.sendButtonMessage =
-FacebookMessenger.prototype.sendButtonsMessage = function (id, text, buttons, cb) {
+FBMessenger.prototype.sendButtonMessage =
+FBMessenger.prototype.sendButtonsMessage = function (id, text, buttons, cb) {
   var messageData = {
     'attachment': {
       'type': 'template',
@@ -52,7 +52,7 @@ FacebookMessenger.prototype.sendButtonsMessage = function (id, text, buttons, cb
   this.sendMessage(id, messageData, cb)
 }
 
-FacebookMessenger.prototype.sendReceiptMessage = function (id, payload, cb) {
+FBMessenger.prototype.sendReceiptMessage = function (id, payload, cb) {
   payload.template_type = 'receipt'
   var messageData = {
     'attachment': {
@@ -63,7 +63,7 @@ FacebookMessenger.prototype.sendReceiptMessage = function (id, payload, cb) {
   this.sendMessage(id, messageData, cb)
 }
 
-FacebookMessenger.prototype.sendMessage = function (id, data, cb) {
+FBMessenger.prototype.sendMessage = function (id, data, cb) {
   var req = {
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: {access_token: this.token},
@@ -75,15 +75,28 @@ FacebookMessenger.prototype.sendMessage = function (id, data, cb) {
   }
   request(req, function (err, res, body) {
     if (!cb) return
-    if (err) {
-      cb(err, null)
-      return
-    } else if (body.error) {
-      cb(body.error, null)
-      return
-    }
+    if (err) return cb(err)
+    if (body.error) return cb(body.error)
     cb(null, body)
   })
 }
 
-module.exports = FacebookMessenger
+FBMessenger.prototype.getProfile = function (id, cb) {
+  var req = {
+    method: 'GET',
+    uri: 'https://graph.facebook.com/v2.6/' + id,
+    qs: {
+      fields: 'first_name,last_name,profile_pic',
+      access_token: this.token
+    },
+    json: true
+  }
+  request(req, function (err, res, body) {
+    if (!cb) return
+    if (err) return cb(err)
+    if (body.error) return cb(body.error)
+    cb(null, body)
+  })
+}
+
+module.exports = FBMessenger
