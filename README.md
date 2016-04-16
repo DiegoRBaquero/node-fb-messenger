@@ -46,7 +46,7 @@ var messenger = new FBMessenger(<YOUR TOKEN>)
 
 messenger.sendTextMessage(<ID>, 'Hello', function (err, body) {
   if (err) return console.error(err)
-  console.log(body) // Prints { "recipient_id": <rid>, "message_id": <mid> }
+  console.log(body) // Prints { recipient_id: <rid>, message_id: <mid> }
 })
 
 messenger.getProfile(<ID>, function (err, body) {
