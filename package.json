@@ -20,10 +20,10 @@
     "tape": "^4.5.1"
   },
   "dependencies": {
-    "request": "^2.71.0"
+    "request": "^2.72.0"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/DiegoRBaquero/node-fb-messenger.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DiegoRBaquero/node-fb-messenger.git"
   }
 }
