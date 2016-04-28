@@ -7,51 +7,91 @@
 npm install fb-messenger --save
 ```
 
-## Usage
-
-In your node program:
-
-```js
-var FBMessenger = require('fb-messenger')
-var messenger = new FBMessenger(<YOUR TOKEN>)
-```
-
 ## API
 
-After you have required fb-messenger and created an instance you can use the following functions
+You must require fb-messenger and create an instance
 
 ```js
-messenger.sendTextMessage(id, message[, cb]) // Sends a text message
+// Constructor
+var FBMessenger = require('fb-messenger')
+var messenger = new FBMessenger(token[, notification_type])
 
-messenger.sendImageMessage(id, imageURL[, cb]) // Sends an image from URL
+// Functions
+messenger.sendTextMessage(id, message[, notification_type][, cb]) // Sends a text message
 
-messenger.sendGenericMessage(id, elements[, cb]) // Sends an H-Scroll generic message
-messenger.sendHScrollMessage(id, elements[, cb]) // Sends an H-SCroll generic message (Alias)
+messenger.sendImageMessage(id, imageURL[, notification_type][, cb]) // Sends an image from URL
 
-messenger.sendButtonsMessage(id, message, buttons[, cb]) // Sends a buttons message
-messenger.sendButtonMessage(id, message, buttons[, cb]) // Sends a buttons message (Alias)
+messenger.sendGenericMessage(id, elements[, notification_type][, cb]) // Sends an H-Scroll generic message
+messenger.sendHScrollMessage(id, elements[, notification_type][, cb]) // Sends an H-SCroll generic message (Alias)
 
-messenger.sendReceiptMessage(id, payload[, cb]) // Sends a receipt message (No need for template_type in payload) 
+messenger.sendButtonsMessage(id, message, buttons[, notification_type][, cb]) // Sends a buttons message
+messenger.sendButtonMessage(id, message, buttons[, notification_type][, cb]) // Sends a buttons message (Alias)
 
-messenger.sendMessage(id, messageData[, cb]) // Send a message from custom data
+messenger.sendReceiptMessage(id, payload[, notification_type][, cb]) // Sends a receipt message (No need for template_type in payload) 
+
+messenger.sendMessage(id, messageData[, notification_type][, cb]) // Send a message from custom data
 
 messenger.getProfile(id, cb) // Gets user information
 ```
 
-## Example
+#### Notification Types:
+ - REGULAR
+ - SILENT_PUSH
+ - NO_PUSH
+
+## Examples
+
+### Basic Example
+
+```js
+var FBMessenger = require('fb-messenger')
+var messenger = new FBMessenger(<YOUR TOKEN>)
+
+messenger.sendTextMessage(<ID>, 'Hello')
+```
+
+### Callback Example
 
 ```js
 var FBMessenger = require('fb-messenger')
 var messenger = new FBMessenger(<YOUR TOKEN>)
 
 messenger.sendTextMessage(<ID>, 'Hello', function (err, body) {
-  if (err) return console.error(err)
-  console.log(body) // Prints { recipient_id: <rid>, message_id: <mid> }
+  if(err) return console.error(err)
+  console.log(body)
 })
+```
 
-messenger.getProfile(<ID>, function (err, body) {
+### No push Example
+
+```js
+var FBMessenger = require('fb-messenger')
+var messenger = new FBMessenger(<YOUR TOKEN>)
+
+messenger.sendTextMessage(<ID>, 'Hello', 'NO_PUSH')
+```
+
+### Default to silent push Example
+
+```js
+var FBMessenger = require('fb-messenger')
+var messenger = new FBMessenger(<YOUR TOKEN>, 'SILENT_PUSH')
+
+messenger.sendTextMessage(<ID>, 'Hello')
+```
+
+### Complete Example
+
+```js
+var FBMessenger = require('fb-messenger')
+var messenger = new FBMessenger(<YOUR TOKEN>, 'NO_PUSH')
+
+messenger.sendTextMessage(<ID>, 'Hello') // Send a message with NO_PUSH, no callback
+
+// Send an image overriding default notification type with callback
+messenger.sendImageMessage(<ID>, <IMG URL>, 'REGULAR', function (err, body) {
   if (err) return console.error(err)
-  console.log(body) // Prints { first_name: XXXXX, last_name: YYYYYY, profile_pic: IMAGE_URL}
+  console.log('Image sent successfully')
 })
 ```
 

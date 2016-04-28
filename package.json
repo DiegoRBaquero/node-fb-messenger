@@ -1,6 +1,6 @@
 {
   "name": "fb-messenger",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Facebook Messenger Platform API",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,9 @@
     "messenger",
     "graph",
     "api",
-    "platform"
+    "platform",
+    "send",
+    "fb"
   ],
   "author": "Diego Rodriguez Baquero",
   "license": "MIT",
