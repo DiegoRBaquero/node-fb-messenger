@@ -1,18 +1,18 @@
 var request = require('request')
 
-function FBMessenger (token, notification_type) {
+function FBMessenger (token, notificationType) {
   this.token = token
-  this.notification_type = notification_type || 'REGULAR'
+  this.notificationType = notificationType || 'REGULAR'
 }
 
-FBMessenger.prototype.sendTextMessage = function (id, text, notification_type, cb) {
+FBMessenger.prototype.sendTextMessage = function (id, text, notificationType, cb) {
   var messageData = {
     text: text
   }
-  this.sendMessage(id, messageData, notification_type, cb)
+  this.sendMessage(id, messageData, notificationType, cb)
 }
 
-FBMessenger.prototype.sendImageMessage = function (id, imageURL, notification_type, cb) {
+FBMessenger.prototype.sendImageMessage = function (id, imageURL, notificationType, cb) {
   var messageData = {
     'attachment': {
       'type': 'image',
@@ -21,11 +21,11 @@ FBMessenger.prototype.sendImageMessage = function (id, imageURL, notification_ty
       }
     }
   }
-  this.sendMessage(id, messageData, notification_type, cb)
+  this.sendMessage(id, messageData, notificationType, cb)
 }
 
 FBMessenger.prototype.sendGenericMessage =
-FBMessenger.prototype.sendHScrollMessage = function (id, elements, notification_type, cb) {
+FBMessenger.prototype.sendHScrollMessage = function (id, elements, notificationType, cb) {
   var messageData = {
     'attachment': {
       'type': 'template',
@@ -35,11 +35,11 @@ FBMessenger.prototype.sendHScrollMessage = function (id, elements, notification_
       }
     }
   }
-  this.sendMessage(id, messageData, notification_type, cb)
+  this.sendMessage(id, messageData, notificationType, cb)
 }
 
 FBMessenger.prototype.sendButtonMessage =
-FBMessenger.prototype.sendButtonsMessage = function (id, text, buttons, notification_type, cb) {
+FBMessenger.prototype.sendButtonsMessage = function (id, text, buttons, notificationType, cb) {
   var messageData = {
     'attachment': {
       'type': 'template',
@@ -50,10 +50,10 @@ FBMessenger.prototype.sendButtonsMessage = function (id, text, buttons, notifica
       }
     }
   }
-  this.sendMessage(id, messageData, notification_type, cb)
+  this.sendMessage(id, messageData, notificationType, cb)
 }
 
-FBMessenger.prototype.sendReceiptMessage = function (id, payload, notification_type, cb) {
+FBMessenger.prototype.sendReceiptMessage = function (id, payload, notificationType, cb) {
   payload.template_type = 'receipt'
   var messageData = {
     'attachment': {
@@ -61,14 +61,14 @@ FBMessenger.prototype.sendReceiptMessage = function (id, payload, notification_t
       'payload': payload
     }
   }
-  this.sendMessage(id, messageData, notification_type, cb)
+  this.sendMessage(id, messageData, notificationType, cb)
 }
 
-FBMessenger.prototype.sendMessage = function (id, data, notification_type, cb) {
-  notification_type = notification_type || this.notification_type
-  if(typeof notification_type === 'function') {
-    cb = notification_type
-    notification_type = this.notification_type
+FBMessenger.prototype.sendMessage = function (id, data, notificationType, cb) {
+  notificationType = notificationType || this.notificationType
+  if (typeof notificationType === 'function') {
+    cb = notificationType
+    notificationType = this.notificationType
   }
   var req = {
     url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -77,7 +77,7 @@ FBMessenger.prototype.sendMessage = function (id, data, notification_type, cb) {
     json: {
       recipient: {id: id},
       message: data,
-      notification_type: notification_type
+      notification_type: notificationType
     }
   }
   request(req, function (err, res, body) {
