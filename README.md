@@ -32,6 +32,8 @@ messenger.sendReceiptMessage(id, payload[, notification_type][, cb]) // Sends a 
 messenger.sendMessage(id, messageData[, notification_type][, cb]) // Send a message from custom data
 
 messenger.getProfile(id, cb) // Gets user information
+
+messenger.setWelcomeMessage(pageId, message, cb) // Sets Page's Welcome Message (message can be a text string or a strucuted message)
 ```
 
 #### Notification Types:

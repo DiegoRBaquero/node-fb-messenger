@@ -106,4 +106,41 @@ FBMessenger.prototype.getProfile = function (id, cb) {
   })
 }
 
+FBMessenger.prototype.setWelcomeMessage = function (pageId, message, cb) {
+  if (typeof message === 'string') {
+    message = {
+      text: message
+    }
+  } else {
+    message = {
+      attachment: {
+        type: 'template',
+        payload: message
+      }
+    }
+  }
+  var req = {
+    method: 'POST',
+    uri: 'https://graph.facebook.com/v2.6/' + pageId + '/thread_settings',
+    qs: {
+      access_token: this.token
+    },
+    json: {
+      setting_type: 'call_to_actions',
+      thread_state: 'new_thread',
+      call_to_actions:[
+        {
+          message: message
+        }
+      ]
+    }
+  }
+  request(req, function (err, res, body) {
+    if (!cb) return
+    if (err) return cb(err)
+    if (body.error) return cb(body.error)
+    cb(null, body)
+  })
+}
+
 module.exports = FBMessenger
