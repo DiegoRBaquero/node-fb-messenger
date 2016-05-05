@@ -14,26 +14,26 @@ You must require fb-messenger and create an instance
 ```js
 // Constructor
 var FBMessenger = require('fb-messenger')
-var messenger = new FBMessenger(token[, notification_type])
+var messenger = new FBMessenger(token[, notificationType])
 
 // Functions
-messenger.sendTextMessage(id, message[, notification_type][, cb]) // Sends a text message
+messenger.sendTextMessage(id, message[, notificationType][, cb]) // Sends a text message
 
-messenger.sendImageMessage(id, imageURL[, notification_type][, cb]) // Sends an image from URL
+messenger.sendImageMessage(id, imageURL[, notificationType][, cb]) // Sends an image from URL
 
-messenger.sendGenericMessage(id, elements[, notification_type][, cb]) // Sends an H-Scroll generic message
-messenger.sendHScrollMessage(id, elements[, notification_type][, cb]) // Sends an H-SCroll generic message (Alias)
+messenger.sendGenericMessage(id, elements[, notificationType][, cb]) // Sends an H-Scroll generic message
+messenger.sendHScrollMessage(id, elements[, notificationType][, cb]) // Sends an H-SCroll generic message (Alias)
 
-messenger.sendButtonsMessage(id, message, buttons[, notification_type][, cb]) // Sends a buttons message
-messenger.sendButtonMessage(id, message, buttons[, notification_type][, cb]) // Sends a buttons message (Alias)
+messenger.sendButtonsMessage(id, message, buttons[, notificationType][, cb]) // Sends a buttons message
+messenger.sendButtonMessage(id, message, buttons[, notificationType][, cb]) // Sends a buttons message (Alias)
 
-messenger.sendReceiptMessage(id, payload[, notification_type][, cb]) // Sends a receipt message (No need for template_type in payload) 
+messenger.sendReceiptMessage(id, payload[, notificationType][, cb]) // Sends a receipt message (No need for template_type in payload) 
 
-messenger.sendMessage(id, messageData[, notification_type][, cb]) // Send a message from custom data
+messenger.sendMessage(id, messageData[, notificationType][, cb]) // Send a message from custom data
 
 messenger.getProfile(id, cb) // Gets user information
 
-messenger.setWelcomeMessage(pageId, message, cb) // Sets Page's Welcome Message (message can be a text string or a strucuted message)
+messenger.setWelcomeMessage(pageId, message[, cb]) // Sets Page's Welcome Message (message can be a text string or a strucuted message)
 ```
 
 #### Notification Types:
