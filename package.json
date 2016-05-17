@@ -18,7 +18,7 @@
   "author": "Diego Rodriguez Baquero",
   "license": "MIT",
   "devDependencies": {
-    "standard": "^7.0.1",
+    "standard": "^7.1.0",
     "tape": "^4.5.1"
   },
   "dependencies": {
