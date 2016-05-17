@@ -25,33 +25,33 @@ FBMessenger.prototype.sendImageMessage = function (id, imageURL, notificationTyp
 }
 
 FBMessenger.prototype.sendGenericMessage =
-FBMessenger.prototype.sendHScrollMessage = function (id, elements, notificationType, cb) {
-  var messageData = {
-    'attachment': {
-      'type': 'template',
-      'payload': {
-        'template_type': 'generic',
-        'elements': elements
+  FBMessenger.prototype.sendHScrollMessage = function (id, elements, notificationType, cb) {
+    var messageData = {
+      'attachment': {
+        'type': 'template',
+        'payload': {
+          'template_type': 'generic',
+          'elements': elements
+        }
       }
     }
+    this.sendMessage(id, messageData, notificationType, cb)
   }
-  this.sendMessage(id, messageData, notificationType, cb)
-}
 
 FBMessenger.prototype.sendButtonMessage =
-FBMessenger.prototype.sendButtonsMessage = function (id, text, buttons, notificationType, cb) {
-  var messageData = {
-    'attachment': {
-      'type': 'template',
-      'payload': {
-        'template_type': 'button',
-        'text': text,
-        'buttons': buttons
+  FBMessenger.prototype.sendButtonsMessage = function (id, text, buttons, notificationType, cb) {
+    var messageData = {
+      'attachment': {
+        'type': 'template',
+        'payload': {
+          'template_type': 'button',
+          'text': text,
+          'buttons': buttons
+        }
       }
     }
+    this.sendMessage(id, messageData, notificationType, cb)
   }
-  this.sendMessage(id, messageData, notificationType, cb)
-}
 
 FBMessenger.prototype.sendReceiptMessage = function (id, payload, notificationType, cb) {
   payload.template_type = 'receipt'
@@ -72,10 +72,10 @@ FBMessenger.prototype.sendMessage = function (id, data, notificationType, cb) {
   }
   var req = {
     url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: {access_token: this.token},
+    qs: { access_token: this.token },
     method: 'POST',
     json: {
-      recipient: {id: id},
+      recipient: { id: id },
       message: data,
       notification_type: notificationType
     }
@@ -128,7 +128,7 @@ FBMessenger.prototype.setWelcomeMessage = function (pageId, message, cb) {
     json: {
       setting_type: 'call_to_actions',
       thread_state: 'new_thread',
-      call_to_actions:[
+      call_to_actions: [
         {
           message: message
         }
