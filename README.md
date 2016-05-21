@@ -21,11 +21,9 @@ messenger.sendTextMessage(id, message[, notificationType][, cb]) // Sends a text
 
 messenger.sendImageMessage(id, imageURL[, notificationType][, cb]) // Sends an image from URL
 
-messenger.sendGenericMessage(id, elements[, notificationType][, cb]) // Sends an H-Scroll generic message
-messenger.sendHScrollMessage(id, elements[, notificationType][, cb]) // Sends an H-SCroll generic message (Alias)
+messenger.sendHScrollMessage(id, elements[, notificationType][, cb]) // Sends an H-SCroll generic message
 
 messenger.sendButtonsMessage(id, message, buttons[, notificationType][, cb]) // Sends a buttons message
-messenger.sendButtonMessage(id, message, buttons[, notificationType][, cb]) // Sends a buttons message (Alias)
 
 messenger.sendReceiptMessage(id, payload[, notificationType][, cb]) // Sends a receipt message (No need for template_type in payload) 
 
