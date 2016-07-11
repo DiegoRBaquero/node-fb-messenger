@@ -64,8 +64,16 @@ class FBMessenger {
   }
 
   sendQuickRepliesMessage(id, attachment, quickReplies, notificationType, cb) {
+    const attachmentType = (typeof attachment === 'string' ? 'text' : 'attachment')
+    const attachmentObject = typeof attachment === 'string' ? attachment : {
+      type: 'template',
+      'payload': {
+        'template_type': 'generic',
+        'elements': attachment
+      }
+    }
     const messageData = {
-      [typeof attachment === 'string' ? 'text' : 'attachment']: attachment,
+      [attachmentType]: attachmentObject,
       'quick_replies': quickReplies
     }
     this.sendMessage(id, messageData, notificationType, cb)
