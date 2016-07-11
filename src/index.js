@@ -63,6 +63,14 @@ class FBMessenger {
     this.sendMessage(id, messageData, notificationType, cb)
   }
 
+  sendQuickReplyMessage(id, messageData, quickReplies, notificationType, cb) {
+    const messageData = {
+      [typeof messageData === 'string' ? 'text' : 'attachment']: messageData,
+      'quick_replies': quickReplies
+    }
+    this.sendMessage(id, messageData, notificationType, cb)
+  }
+
   sendMessage (id, data, notificationType = this.notificationType, cb) {
     if (typeof notificationType === 'function') {
       cb = notificationType
