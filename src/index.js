@@ -149,9 +149,7 @@ class FBMessenger {
     const jsonObject = {
       setting_type: 'call_to_actions',
       thread_state: 'existing_thread',
-      greeting: {
-        text: message
-      }
+      call_to_actions: menuItems
     }
     sendThreadSettingsMessage(pageId, jsonObject, cb)
   }
