@@ -125,19 +125,45 @@ class FBMessenger {
         }
       }
     }
+    const jsonObject = {
+      setting_type: 'call_to_actions',
+      thread_state: 'new_thread',
+      call_to_actions: [{
+        message: message
+      }]
+    }
+    sendThreadSettingsMessage(pageId, jsonObject, cb)
+  }
+
+  setGreetingText (pageId, message, cb) {
+    const jsonObject = {
+      setting_type: 'greeting',
+      greeting: {
+        text: message
+      }
+    }
+    sendThreadSettingsMessage(pageId, jsonObject, cb)
+  }
+
+  setPersistentMenu (pageId, menuItems, cb) {
+    const jsonObject = {
+      setting_type: 'call_to_actions',
+      thread_state: 'existing_thread',
+      greeting: {
+        text: message
+      }
+    }
+    sendThreadSettingsMessage(pageId, jsonObject, cb)
+  }
+
+  sendThreadSettingsMessage (pageId, jsonObject, cb) {
     const req = {
       method: 'POST',
       uri: `https://graph.facebook.com/v2.6/${pageId}/thread_settings`,
       qs: {
         access_token: this.token
       },
-      json: {
-        setting_type: 'call_to_actions',
-        thread_state: 'new_thread',
-        call_to_actions: [{
-          message: message
-        }]
-      }
+      json: jsonObject
     }
     sendRequest(req, cb)
   }
