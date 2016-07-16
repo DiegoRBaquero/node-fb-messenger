@@ -63,6 +63,22 @@ class FBMessenger {
     this.sendMessage(id, messageData, notificationType, cb)
   }
 
+  sendQuickRepliesMessage(id, attachment, quickReplies, notificationType, cb) {
+    const attachmentType = (typeof attachment === 'string' ? 'text' : 'attachment')
+    const attachmentObject = typeof attachment === 'string' ? attachment : {
+      type: 'template',
+      'payload': {
+        'template_type': 'generic',
+        'elements': attachment
+      }
+    }
+    const messageData = {
+      [attachmentType]: attachmentObject,
+      'quick_replies': quickReplies
+    }
+    this.sendMessage(id, messageData, notificationType, cb)
+  }
+
   sendMessage (id, data, notificationType = this.notificationType, cb) {
     if (typeof notificationType === 'function') {
       cb = notificationType
@@ -109,19 +125,43 @@ class FBMessenger {
         }
       }
     }
+    const jsonObject = {
+      setting_type: 'call_to_actions',
+      thread_state: 'new_thread',
+      call_to_actions: [{
+        message: message
+      }]
+    }
+    sendThreadSettingsMessage(pageId, jsonObject, cb)
+  }
+
+  setGreetingText (pageId, message, cb) {
+    const jsonObject = {
+      setting_type: 'greeting',
+      greeting: {
+        text: message
+      }
+    }
+    sendThreadSettingsMessage(pageId, jsonObject, cb)
+  }
+
+  setPersistentMenu (pageId, menuItems, cb) {
+    const jsonObject = {
+      setting_type: 'call_to_actions',
+      thread_state: 'existing_thread',
+      call_to_actions: menuItems
+    }
+    sendThreadSettingsMessage(pageId, jsonObject, cb)
+  }
+
+  sendThreadSettingsMessage (pageId, jsonObject, cb) {
     const req = {
       method: 'POST',
       uri: `https://graph.facebook.com/v2.6/${pageId}/thread_settings`,
       qs: {
         access_token: this.token
       },
-      json: {
-        setting_type: 'call_to_actions',
-        thread_state: 'new_thread',
-        call_to_actions: [{
-          message: message
-        }]
-      }
+      json: jsonObject
     }
     sendRequest(req, cb)
   }
