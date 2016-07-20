@@ -63,7 +63,7 @@ class FBMessenger {
     this.sendMessage(id, messageData, notificationType, cb)
   }
 
-  sendQuickRepliesMessage(id, attachment, quickReplies, notificationType, cb) {
+  sendQuickRepliesMessage (id, attachment, quickReplies, notificationType, cb) {
     const attachmentType = (typeof attachment === 'string' ? 'text' : 'attachment')
     const attachmentObject = typeof attachment === 'string' ? attachment : {
       type: 'template',
@@ -132,7 +132,7 @@ class FBMessenger {
         message: message
       }]
     }
-    sendThreadSettingsMessage(pageId, jsonObject, cb)
+    this.sendThreadSettingsMessage(pageId, jsonObject, cb)
   }
 
   setGreetingText (pageId, message, cb) {
@@ -142,7 +142,7 @@ class FBMessenger {
         text: message
       }
     }
-    sendThreadSettingsMessage(pageId, jsonObject, cb)
+    this.sendThreadSettingsMessage(pageId, jsonObject, cb)
   }
 
   setPersistentMenu (pageId, menuItems, cb) {
@@ -151,7 +151,7 @@ class FBMessenger {
       thread_state: 'existing_thread',
       call_to_actions: menuItems
     }
-    sendThreadSettingsMessage(pageId, jsonObject, cb)
+    this.sendThreadSettingsMessage(pageId, jsonObject, cb)
   }
 
   sendThreadSettingsMessage (pageId, jsonObject, cb) {

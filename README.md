@@ -28,11 +28,19 @@ messenger.sendButtonsMessage(id, message, buttons[, notificationType][, cb]) // 
 
 messenger.sendReceiptMessage(id, payload[, notificationType][, cb]) // Sends a receipt message (No need for template_type in payload) 
 
+messenger.sendQuickRepliesMessage(id, attachment, quickReplies[, notificationType][, cb]) // Sends a Quick Replies Message
+
 messenger.sendMessage(id, messageData[, notificationType][, cb]) // Send a message from custom data
 
 messenger.getProfile(id, cb) // Gets user information
 
 messenger.setWelcomeMessage(pageId, message[, cb]) // Sets Page's Welcome Message (message can be a text string or a strucuted message)
+
+messenger.setGreetingText (pageId, message[, cb]) // Sets Page's Greeting Text
+
+messenger.setPersistentMenu (pageId, menuItems[, cb]) // Set's Page's Persistent Meny
+
+messenger.sendThreadSettingsMessage (pageId, jsonObject[, cb]) // Send Manually Page's Thread Settings
 ```
 
 #### Notification Types:
