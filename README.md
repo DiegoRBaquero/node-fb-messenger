@@ -32,6 +32,8 @@ messenger.sendQuickRepliesMessage(id, attachment, quickReplies[, notificationTyp
 
 messenger.sendMessage(id, messageData[, notificationType][, cb]) // Send a message from custom data
 
+messenger.setSenderAction(id, action, cb) // Sets a sender action (either typing_on, typing_off or mark_seen)
+
 messenger.getProfile(id, cb) // Gets user information
 
 messenger.setWelcomeMessage(pageId, message[, cb]) // Sets Page's Welcome Message (message can be a text string or a strucuted message)

@@ -99,6 +99,21 @@ class FBMessenger {
     sendRequest(req, cb)
   }
 
+  setSenderAction(id, action, cb) {
+    const req = {
+      url: 'https://graph.facebook.com/v2.6/me/messages',
+      qs: { access_token: this.token },
+      method: 'POST',
+      json: {
+        recipient: {
+          id: id
+        },
+        sender_action: action
+      }
+    }
+    sendRequest(req, cb);
+  }
+
   getProfile (id, cb) {
     const req = {
       method: 'GET',
