@@ -6,6 +6,10 @@ class FBMessenger {
     this.notificationType = notificationType || 'REGULAR'
   }
 
+  sendAction (id, action) {
+    this.sendMessage(id, action, null, null);
+  }
+
   sendTextMessage (id, text, notificationType, cb) {
     const messageData = {
       text: text
@@ -84,17 +88,25 @@ class FBMessenger {
       cb = notificationType
       notificationType = this.notificationType
     }
+
+    const json = {
+      recipient: {
+        id: id
+      }
+    }
+
+    if (typeof data === 'string') {
+      json.sender_actions = data;
+    } else {
+      json.message = data;
+      json.notification_type = notificationType;
+    }
+
     const req = {
       url: 'https://graph.facebook.com/v2.6/me/messages',
-      qs: { access_token: this.token },
+      qs: {access_token: this.token},
       method: 'POST',
-      json: {
-        recipient: {
-          id: id
-        },
-        message: data,
-        notification_type: notificationType
-      }
+      json: json
     }
     sendRequest(req, cb)
   }
