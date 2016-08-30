@@ -7,7 +7,7 @@ class FBMessenger {
   }
 
   sendAction (id, action) {
-    this.sendMessage(id, action, null, null);
+    this.sendMessage(id, action)
   }
 
   sendTextMessage (id, text, notificationType, cb) {
@@ -96,10 +96,10 @@ class FBMessenger {
     }
 
     if (typeof data === 'string') {
-      json.sender_actions = data;
+      json.sender_actions = data
     } else {
-      json.message = data;
-      json.notification_type = notificationType;
+      json.message = data
+      json.notification_type = notificationType
     }
 
     const req = {
