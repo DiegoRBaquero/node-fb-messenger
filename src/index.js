@@ -96,7 +96,7 @@ class FBMessenger {
     }
 
     if (typeof data === 'string') {
-      json.sender_actions = data
+      json.sender_action = data
     } else {
       json.message = data
       json.notification_type = notificationType
