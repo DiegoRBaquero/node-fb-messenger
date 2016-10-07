@@ -40,7 +40,7 @@ messenger.setWelcomeMessage(pageId, message[, cb]) // Sets Page's Welcome Messag
 
 messenger.setGreetingText (pageId, message[, cb]) // Sets Page's Greeting Text
 
-messenger.setPersistentMenu (pageId, menuItems[, cb]) // Set's Page's Persistent Meny
+messenger.setPersistentMenu (pageId, menuItems[, cb]) // Set's Page's Persistent Menu
 
 messenger.sendThreadSettingsMessage (pageId, jsonObject[, cb]) // Send Manually Page's Thread Settings
 ```
