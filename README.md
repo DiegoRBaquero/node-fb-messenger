@@ -1,5 +1,7 @@
 # node-fb-messenger [![npm](https://img.shields.io/npm/v/fb-messenger.svg)](https://www.npmjs.com/package/fb-messenger) [![npm](https://img.shields.io/npm/dm/fb-messenger.svg)](https://www.npmjs.com/package/fb-messenger) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/) [![npm](https://img.shields.io/npm/l/fb-messenger.svg)](LICENSE) 
 #### Facebook Messenger Platform NodeJS API Wrapper
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/DiegoRBaquero/node-fb-messenger.svg)](https://greenkeeper.io/)
 [![bitHound Overall Score](https://www.bithound.io/github/DiegoRBaquero/node-fb-messenger/badges/score.svg)](https://www.bithound.io/github/DiegoRBaquero/node-fb-messenger) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b3cbd4666fa54722b38288c98cd5e8c1)](https://www.codacy.com/app/diegorbaquero/node-fb-messenger?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DiegoRBaquero/node-fb-messenger&amp;utm_campaign=Badge_Grade) [![Code Climate](https://codeclimate.com/github/DiegoRBaquero/node-fb-messenger/badges/gpa.svg)](https://codeclimate.com/github/DiegoRBaquero/node-fb-messenger)
 
 ## Installation
