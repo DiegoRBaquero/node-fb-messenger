@@ -28,6 +28,8 @@ messenger.sendHScrollMessage(id, elements[, notificationType][, cb]) // Sends an
 
 messenger.sendButtonsMessage(id, message, buttons[, notificationType][, cb]) // Sends a buttons message
 
+messenger.sendListMessage(id, elements, buttons, top_element_type[, notificationType][, cb]) // Sends a list message
+
 messenger.sendReceiptMessage(id, payload[, notificationType][, cb]) // Sends a receipt message (No need for template_type in payload) 
 
 messenger.sendQuickRepliesMessage(id, attachment, quickReplies[, notificationType][, cb]) // Sends a Quick Replies Message
