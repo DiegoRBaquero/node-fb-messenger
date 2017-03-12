@@ -55,6 +55,23 @@ class FBMessenger {
     }
     this.sendMessage(id, messageData, notificationType, cb)
   }
+  
+  sendListMessage (id, elements, buttons, topElementStyle, notificationType, cb) {
+    buttons = buttons || [];
+    topElementStyle = topElementStyle || 'large';
+    const messageData = {
+      'attachment': {
+        'type': 'template',
+        'payload': {
+          'template_type': 'list',
+          'top_element_style': topElementStyle,
+          'elements': elements,
+          'buttons': buttons
+        }
+      }
+    }
+    this.sendMessage(id, messageData, notificationType, cb)
+  }
 
   sendReceiptMessage (id, payload, notificationType, cb) {
     payload.template_type = 'receipt'
