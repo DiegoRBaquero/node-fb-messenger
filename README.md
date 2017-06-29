@@ -46,6 +46,8 @@ messenger.setGreetingText (pageId, message[, cb]) // Sets Page's Greeting Text
 
 messenger.setPersistentMenu (pageId, menuItems[, cb]) // Set's Page's Persistent Menu
 
+messenger.setDomainWhitelist (pageId, domains[, cb]) // Set's Page's Whitelisted Domains 
+
 messenger.sendThreadSettingsMessage (pageId, jsonObject[, cb]) // Send Manually Page's Thread Settings
 ```
 
