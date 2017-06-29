@@ -189,7 +189,7 @@ class FBMessenger {
       whitelisted_domains: domains,
       domain_action_type: `add`
     }
-    sendThreadSettingsMessage(pageId, jsonObject, cb)
+    this.sendThreadSettingsMessage(pageId, jsonObject, cb)
   }
 
   sendThreadSettingsMessage (pageId, jsonObject, cb) {
