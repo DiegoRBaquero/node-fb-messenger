@@ -183,6 +183,15 @@ class FBMessenger {
     this.sendThreadSettingsMessage(pageId, jsonObject, cb)
   }
 
+  setDomainWhitelist(pageId, domains, cb) {
+    const jsonObject = {
+      setting_type: `domain_whitelisting`,
+      whitelisted_domains: domains,
+      domain_action_type: `add`
+    }
+    this.sendThreadSettingsMessage(pageId, jsonObject, cb)
+  }
+
   sendThreadSettingsMessage (pageId, jsonObject, cb) {
     const req = {
       method: 'POST',
