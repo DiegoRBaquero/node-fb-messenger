@@ -55,10 +55,10 @@ class FBMessenger {
     }
     this.sendMessage(id, messageData, notificationType, cb)
   }
-  
+
   sendListMessage (id, elements, buttons, topElementStyle, notificationType, cb) {
-    buttons = buttons || [];
-    topElementStyle = topElementStyle || 'large';
+    buttons = buttons || []
+    topElementStyle = topElementStyle || 'large'
     const messageData = {
       'attachment': {
         'type': 'template',
@@ -183,7 +183,7 @@ class FBMessenger {
     this.sendThreadSettingsMessage(pageId, jsonObject, cb)
   }
 
-  setDomainWhitelist(pageId, domains, cb) {
+  setDomainWhitelist (pageId, domains, cb) {
     const jsonObject = {
       setting_type: `domain_whitelisting`,
       whitelisted_domains: domains,
