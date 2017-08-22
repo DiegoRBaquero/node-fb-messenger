@@ -1,4 +1,4 @@
-# node-fb-messenger [![npm](https://img.shields.io/npm/v/fb-messenger.svg)](https://www.npmjs.com/package/fb-messenger) [![npm](https://img.shields.io/npm/dm/fb-messenger.svg)](https://www.npmjs.com/package/fb-messenger) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/) [![npm](https://img.shields.io/npm/l/fb-messenger.svg)](LICENSE) 
+fb-messenger [![npm](https://img.shields.io/npm/v/fb-messenger.svg)](https://www.npmjs.com/package/fb-messenger) [![npm](https://img.shields.io/npm/dm/fb-messenger.svg)](https://www.npmjs.com/package/fb-messenger) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/) [![npm](https://img.shields.io/npm/l/fb-messenger.svg)](LICENSE) 
 #### Facebook Messenger Platform NodeJS API Wrapper
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/DiegoRBaquero/node-fb-messenger.svg)](https://greenkeeper.io/)
