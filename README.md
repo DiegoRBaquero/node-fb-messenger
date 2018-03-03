@@ -34,6 +34,8 @@ messenger.sendReceiptMessage(id, payload[, notificationType][, cb]) // Sends a r
 
 messenger.sendQuickRepliesMessage(id, attachment, quickReplies[, notificationType][, cb]) // Sends a Quick Replies Message
 
+messenger.sendOpenGraphMessage(id, payload[, notificationType][, cb]) // Sends a Open Graph Message
+
 messenger.sendMessage(id, messageData[, notificationType][, cb]) // Send a message from custom data
 
 messenger.sendAction(id, actionType) // Send an action type (One of 'mark_seen', 'typing_on', 'typing_off')

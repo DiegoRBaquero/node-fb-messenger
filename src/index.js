@@ -83,7 +83,7 @@ class FBMessenger {
     }
     this.sendMessage(id, messageData, notificationType, cb)
   }
-
+  
   sendQuickRepliesMessage (id, attachment, quickReplies, notificationType, cb) {
     const attachmentType = (typeof attachment === 'string' ? 'text' : 'attachment')
     const attachmentObject = typeof attachment === 'string' ? attachment : {
@@ -100,6 +100,17 @@ class FBMessenger {
     this.sendMessage(id, messageData, notificationType, cb)
   }
 
+  sendOpenGraphMessage(id, payload, notificationType, cb){
+    payload.template_type = 'open_graph'
+    const messageData = {
+      'attachment': {
+        'type': 'template',
+        'payload': payload        
+      }
+    }
+    this.sendMessage(id, messageData, notificationType, cb)
+  }
+  
   sendMessage (id, data, notificationType = this.notificationType, cb) {
     if (typeof notificationType === 'function') {
       cb = notificationType
