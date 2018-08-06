@@ -6,13 +6,33 @@ class FBMessenger {
     this.notificationType = notificationType
   }
 
-  async sendAction ({id, action}) {
-    return this.sendMessage({id, data: action})
-  }
-
   async sendTextMessage ({id, text, notificationType}) {
     const data = {
       text
+    }
+    return this.sendMessage({id, data, notificationType})
+  }
+
+  async sendAudioMessage ({id, url, notificationType}) {
+    const data = {
+      attachment: {
+        type: 'audio',
+        payload: {
+          url
+        }
+      }
+    }
+    return this.sendMessage({id, data, notificationType})
+  }
+
+  async sendVideoMessage ({id, url, notificationType}) {
+    const data = {
+      attachment: {
+        type: 'video',
+        payload: {
+          url
+        }
+      }
     }
     return this.sendMessage({id, data, notificationType})
   }
@@ -29,15 +49,32 @@ class FBMessenger {
     return this.sendMessage({id, data, notificationType})
   }
 
-  async sendHScrollMessage ({id, elements, notificationType}) {
+  async sendFileMessage ({id, url, notificationType}) {
     const data = {
       attachment: {
-        type: 'template',
+        type: 'file',
         payload: {
-          template_type: 'generic',
-          elements
+          url
         }
       }
+    }
+    return this.sendMessage({id, data, notificationType})
+  }
+
+  // START TEMPLATES
+
+  async sendQuickRepliesMessage ({id, attachment, quickReplies, notificationType}) {
+    const attachmentType = typeof attachment === 'string' ? 'text' : 'attachment'
+    const attachmentObject = typeof attachment === 'string' ? attachment : {
+      type: 'template',
+      payload: {
+        template_type: 'generic',
+        elements: attachment
+      }
+    }
+    const data = {
+      [attachmentType]: attachmentObject,
+      quick_replies: quickReplies
     }
     return this.sendMessage({id, data, notificationType})
   }
@@ -50,6 +87,19 @@ class FBMessenger {
           template_type: 'button',
           text,
           buttons
+        }
+      }
+    }
+    return this.sendMessage({id, data, notificationType})
+  }
+
+  async sendGenericMessage ({id, elements, notificationType}) {
+    const data = {
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'generic',
+          elements
         }
       }
     }
@@ -71,31 +121,49 @@ class FBMessenger {
     return this.sendMessage({id, data, notificationType})
   }
 
-  async sendReceiptMessage ({id, payload, notificationType}) {
-    payload.template_type = 'receipt'
+  async sendMediaMessage ({id, elements, notificationType}) {
     const data = {
       attachment: {
         type: 'template',
-        payload
+        payload: {
+          template_type: 'media',
+          elements
+        }
       }
     }
     return this.sendMessage({id, data, notificationType})
   }
 
-  async sendQuickRepliesMessage ({id, attachment, quickReplies, notificationType}) {
-    const attachmentType = (typeof attachment === 'string' ? 'text' : 'attachment')
-    const attachmentObject = typeof attachment === 'string' ? attachment : {
-      type: 'template',
-      payload: {
-        template_type: 'generic',
-        elements: attachment
+  async sendOpenGraphMessage ({id, elements, notificationType}) {
+    const data = {
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'open_graph',
+          elements
+        }
       }
     }
+    return this.sendMessage({id, data, notificationType})
+  }
+
+  async sendReceiptMessage ({id, payload, notificationType}) {
     const data = {
-      [attachmentType]: attachmentObject,
-      quick_replies: quickReplies
+      attachment: {
+        type: 'template',
+        payload: {
+          ...payload,
+          template_type: 'receipt'
+        }
+      }
     }
     return this.sendMessage({id, data, notificationType})
+  }
+
+  // END TEMPLATES
+
+  async sendAction ({id, action}) {
+    return this.sendMessage({id, data: action})
   }
 
   async sendMessage ({id, data, notificationType = this.notificationType}) {
@@ -122,7 +190,8 @@ class FBMessenger {
       })).json()
   }
 
-  // --- GET PROFILE ---
+  // GET PROFILE
+
   async getProfile (id) {
     return (await fetch(`https://graph.facebook.com/v2.6/${id}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=${this.token}`,
       {
@@ -134,6 +203,7 @@ class FBMessenger {
   }
 
   // START THREAD SETTINGS
+
   async setWelcomeMessage ({pageId, message}) {
     if (typeof message === 'string') {
       message = {

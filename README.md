@@ -23,21 +23,31 @@ const messenger = new FBMessenger({token, notificationType}) // notificationType
 // Methods (notificationType is optional)
 messenger.sendTextMessage({id, message, notificationType}) // Sends a text message
 
-messenger.sendImageMessage({id, imageURL, notificationType}) // Sends an image from URL
+messenger.sendAudioMessage({id, url, notificationType}) // Sends an audio from URL
 
-messenger.sendHScrollMessage({id, elements, notificationType}) // Sends an H-SCroll generic message
+messenger.sendVideoMessage({id, url, notificationType}) // Sends an video from URL
 
-messenger.sendButtonsMessage({id, message, buttons, notificationType}) // Sends a buttons message
+messenger.sendImageMessage({id, url, notificationType}) // Sends an image from URL
 
-messenger.sendListMessage({id, elements, buttons, top_element_type, notificationType}) // Sends a list message
-
-messenger.sendReceiptMessage({id, payload, notificationType}) // Sends a receipt message (No need for template_type in payload) 
+messenger.sendFileMessage({id, url, notificationType}) // Sends an file from URL
 
 messenger.sendQuickRepliesMessage({id, attachment, quickReplies, notificationType}) // Sends a Quick Replies Message
 
-messenger.sendMessage({id, data, notificationType}) // Send a message from custom data
+messenger.sendButtonsMessage({id, message, buttons, notificationType}) // Sends a buttons template message
+
+messenger.sendGenericMessage({id, elements, notificationType}) // Sends a generic template message
+
+messenger.sendListMessage({id, elements, buttons, top_element_type, notificationType}) // Sends a list template message
+
+messenger.sendMediaMessage({id, elements, notificationType}) // Sends a media template message
+
+messenger.sendOpenGraphMessage({id, elements, notificationType}) // Sends an open graph template message
+
+messenger.sendReceiptMessage({id, payload, notificationType}) // Sends a receipt template message (No need for template_type in payload) 
 
 messenger.sendAction({id, actionType}) // Send an action type (One of 'mark_seen', 'typing_on', 'typing_off')
+
+messenger.sendMessage({id, data, notificationType}) // Send a message from custom data
 
 messenger.getProfile(id) // Gets user information
 
