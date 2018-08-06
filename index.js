@@ -1,4 +1,4 @@
-import request from 'request'
+const fetch = require('node-fetch')
 
 class FBMessenger {
   constructor (token, notificationType) {
@@ -6,18 +6,18 @@ class FBMessenger {
     this.notificationType = notificationType || 'REGULAR'
   }
 
-  sendAction (id, action) {
+  async sendAction (id, action) {
     this.sendMessage(id, action)
   }
 
-  sendTextMessage (id, text, notificationType, cb) {
+  async sendTextMessage (id, text, notificationType) {
     const messageData = {
       text: text
     }
-    this.sendMessage(id, messageData, notificationType, cb)
+    return this.sendMessage(id, messageData, notificationType)
   }
 
-  sendImageMessage (id, imageURL, notificationType, cb) {
+  async sendImageMessage (id, imageURL, notificationType) {
     const messageData = {
       'attachment': {
         'type': 'image',
@@ -26,10 +26,10 @@ class FBMessenger {
         }
       }
     }
-    this.sendMessage(id, messageData, notificationType, cb)
+    return this.sendMessage(id, messageData, notificationType)
   }
 
-  sendHScrollMessage (id, elements, notificationType, cb) {
+  async sendHScrollMessage (id, elements, notificationType) {
     const messageData = {
       'attachment': {
         'type': 'template',
@@ -39,10 +39,10 @@ class FBMessenger {
         }
       }
     }
-    this.sendMessage(id, messageData, notificationType, cb)
+    return this.sendMessage(id, messageData, notificationType)
   }
 
-  sendButtonsMessage (id, text, buttons, notificationType, cb) {
+  async sendButtonsMessage (id, text, buttons, notificationType) {
     const messageData = {
       'attachment': {
         'type': 'template',
@@ -53,12 +53,10 @@ class FBMessenger {
         }
       }
     }
-    this.sendMessage(id, messageData, notificationType, cb)
+    return this.sendMessage(id, messageData, notificationType)
   }
 
-  sendListMessage (id, elements, buttons, topElementStyle, notificationType, cb) {
-    buttons = buttons || []
-    topElementStyle = topElementStyle || 'large'
+  async sendListMessage (id, elements, buttons = [], topElementStyle = 'large', notificationType) {
     const messageData = {
       'attachment': {
         'type': 'template',
@@ -70,10 +68,10 @@ class FBMessenger {
         }
       }
     }
-    this.sendMessage(id, messageData, notificationType, cb)
+    return this.sendMessage(id, messageData, notificationType)
   }
 
-  sendReceiptMessage (id, payload, notificationType, cb) {
+  async sendReceiptMessage (id, payload, notificationType) {
     payload.template_type = 'receipt'
     const messageData = {
       'attachment': {
@@ -81,10 +79,10 @@ class FBMessenger {
         'payload': payload
       }
     }
-    this.sendMessage(id, messageData, notificationType, cb)
+    return this.sendMessage(id, messageData, notificationType)
   }
 
-  sendQuickRepliesMessage (id, attachment, quickReplies, notificationType, cb) {
+  async sendQuickRepliesMessage (id, attachment, quickReplies, notificationType) {
     const attachmentType = (typeof attachment === 'string' ? 'text' : 'attachment')
     const attachmentObject = typeof attachment === 'string' ? attachment : {
       type: 'template',
@@ -97,38 +95,31 @@ class FBMessenger {
       [attachmentType]: attachmentObject,
       'quick_replies': quickReplies
     }
-    this.sendMessage(id, messageData, notificationType, cb)
+    return this.sendMessage(id, messageData, notificationType)
   }
 
-  sendMessage (id, data, notificationType = this.notificationType, cb) {
-    if (typeof notificationType === 'function') {
-      cb = notificationType
-      notificationType = this.notificationType
-    }
-
-    const json = {
+  async sendMessage (id, data, notificationType = this.notificationType) {
+    const body = {
       recipient: {
         id: id
       }
     }
 
     if (typeof data === 'string') {
-      json.sender_action = data
+      body.sender_action = data
     } else {
-      json.message = data
-      json.notification_type = notificationType
+      body.message = data
+      body.notification_type = notificationType
     }
 
-    const req = {
-      url: 'https://graph.facebook.com/v2.6/me/messages',
-      qs: {access_token: this.token},
+    const options = {
       method: 'POST',
-      json: json
+      body
     }
-    sendRequest(req, cb)
+    return sendRequest({url: 'https://graph.facebook.com/v2.6/me/messages', options})
   }
 
-  getProfile (id, cb) {
+  getProfile (id) {
     const req = {
       method: 'GET',
       uri: `https://graph.facebook.com/v2.6/${id}`,
@@ -138,10 +129,10 @@ class FBMessenger {
       },
       json: true
     }
-    sendRequest(req, cb)
+    sendRequest(req)
   }
 
-  setWelcomeMessage (pageId, message, cb) {
+  setWelcomeMessage (pageId, message) {
     if (typeof message === 'string') {
       message = {
         text: message
@@ -161,38 +152,38 @@ class FBMessenger {
         message: message
       }]
     }
-    this.sendThreadSettingsMessage(pageId, jsonObject, cb)
+    this.sendThreadSettingsMessage(pageId, jsonObject)
   }
 
-  setGreetingText (pageId, message, cb) {
+  setGreetingText (pageId, message) {
     const jsonObject = {
       setting_type: 'greeting',
       greeting: {
         text: message
       }
     }
-    this.sendThreadSettingsMessage(pageId, jsonObject, cb)
+    this.sendThreadSettingsMessage(pageId, jsonObject)
   }
 
-  setPersistentMenu (pageId, menuItems, cb) {
+  setPersistentMenu (pageId, menuItems) {
     const jsonObject = {
       setting_type: 'call_to_actions',
       thread_state: 'existing_thread',
       call_to_actions: menuItems
     }
-    this.sendThreadSettingsMessage(pageId, jsonObject, cb)
+    this.sendThreadSettingsMessage(pageId, jsonObject)
   }
 
-  setDomainWhitelist (pageId, domains, cb) {
+  setDomainWhitelist (pageId, domains) {
     const jsonObject = {
       setting_type: `domain_whitelisting`,
       whitelisted_domains: domains,
       domain_action_type: `add`
     }
-    this.sendThreadSettingsMessage(pageId, jsonObject, cb)
+    this.sendThreadSettingsMessage(pageId, jsonObject)
   }
 
-  sendThreadSettingsMessage (pageId, jsonObject, cb) {
+  sendThreadSettingsMessage (pageId, jsonObject) {
     const req = {
       method: 'POST',
       uri: `https://graph.facebook.com/v2.6/${pageId}/thread_settings`,
@@ -201,17 +192,20 @@ class FBMessenger {
       },
       json: jsonObject
     }
-    sendRequest(req, cb)
+    sendRequest(req)
   }
 }
 
-const sendRequest = (req, cb) => {
-  request(req, (err, res, body) => {
-    if (!cb) return
-    if (err) return cb(err)
-    if (body.error) return cb(body.error)
-    cb(null, body)
-  })
+const sendRequest = async (url, options) => {
+  return (await fetch(`${url}?access_token=${options.token}`,
+    {
+      ...options,
+      body: JSON.stringify(options.body),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    )).json()
 }
 
 export default FBMessenger
