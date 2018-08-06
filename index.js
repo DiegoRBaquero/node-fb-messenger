@@ -6,8 +6,8 @@ class FBMessenger {
     this.notificationType = notificationType
   }
 
-  async sendAction (id, action) {
-    this.sendMessage(id, action)
+  async sendAction ({id, action}) {
+    return this.sendMessage({id, data: action})
   }
 
   async sendTextMessage ({id, text, notificationType}) {
@@ -19,10 +19,10 @@ class FBMessenger {
 
   async sendImageMessage ({id, url, notificationType}) {
     const data = {
-      'attachment': {
-        'type': 'image',
-        'payload': {
-          'url': url
+      attachment: {
+        type: 'image',
+        payload: {
+          url
         }
       }
     }
@@ -31,11 +31,11 @@ class FBMessenger {
 
   async sendHScrollMessage ({id, elements, notificationType}) {
     const data = {
-      'attachment': {
-        'type': 'template',
-        'payload': {
-          'template_type': 'generic',
-          'elements': elements
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'generic',
+          elements
         }
       }
     }
@@ -44,12 +44,12 @@ class FBMessenger {
 
   async sendButtonsMessage ({id, text, buttons, notificationType}) {
     const data = {
-      'attachment': {
-        'type': 'template',
-        'payload': {
-          'template_type': 'button',
-          'text': text,
-          'buttons': buttons
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'button',
+          text,
+          buttons
         }
       }
     }
@@ -58,13 +58,13 @@ class FBMessenger {
 
   async sendListMessage ({id, elements, buttons = [], topElementStyle = 'large', notificationType}) {
     const data = {
-      'attachment': {
-        'type': 'template',
-        'payload': {
-          'template_type': 'list',
-          'top_element_style': topElementStyle,
-          'elements': elements,
-          'buttons': buttons
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'list',
+          top_element_style: topElementStyle,
+          elements,
+          buttons
         }
       }
     }
@@ -74,9 +74,9 @@ class FBMessenger {
   async sendReceiptMessage ({id, payload, notificationType}) {
     payload.template_type = 'receipt'
     const data = {
-      'attachment': {
-        'type': 'template',
-        'payload': payload
+      attachment: {
+        type: 'template',
+        payload
       }
     }
     return this.sendMessage({id, data, notificationType})
@@ -86,14 +86,14 @@ class FBMessenger {
     const attachmentType = (typeof attachment === 'string' ? 'text' : 'attachment')
     const attachmentObject = typeof attachment === 'string' ? attachment : {
       type: 'template',
-      'payload': {
-        'template_type': 'generic',
-        'elements': attachment
+      payload: {
+        template_type: 'generic',
+        elements: attachment
       }
     }
     const data = {
       [attachmentType]: attachmentObject,
-      'quick_replies': quickReplies
+      quick_replies: quickReplies
     }
     return this.sendMessage({id, data, notificationType})
   }
@@ -195,6 +195,7 @@ class FBMessenger {
         body: JSON.stringify(body)
       })).json()
   }
+
   // END THREAD SETTINGS
 }
 
