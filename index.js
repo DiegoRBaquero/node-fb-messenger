@@ -6,14 +6,14 @@ class FBMessenger {
     this.notificationType = notificationType
   }
 
-  async sendTextMessage ({id, text, notificationType}) {
+  async sendTextMessage ({id, text, ...rest}) {
     const data = {
       text
     }
-    return this.sendMessage({id, data, notificationType})
+    return this.sendMessage({id, data, ...rest})
   }
 
-  async sendAudioMessage ({id, url, notificationType}) {
+  async sendAudioMessage ({id, url, ...rest}) {
     const data = {
       attachment: {
         type: 'audio',
@@ -22,10 +22,10 @@ class FBMessenger {
         }
       }
     }
-    return this.sendMessage({id, data, notificationType})
+    return this.sendMessage({id, data, ...rest})
   }
 
-  async sendVideoMessage ({id, url, notificationType}) {
+  async sendVideoMessage ({id, url, ...rest}) {
     const data = {
       attachment: {
         type: 'video',
@@ -34,10 +34,10 @@ class FBMessenger {
         }
       }
     }
-    return this.sendMessage({id, data, notificationType})
+    return this.sendMessage({id, data, ...rest})
   }
 
-  async sendImageMessage ({id, url, notificationType}) {
+  async sendImageMessage ({id, url, ...rest}) {
     const data = {
       attachment: {
         type: 'image',
@@ -46,10 +46,10 @@ class FBMessenger {
         }
       }
     }
-    return this.sendMessage({id, data, notificationType})
+    return this.sendMessage({id, data, ...rest})
   }
 
-  async sendFileMessage ({id, url, notificationType}) {
+  async sendFileMessage ({id, url, ...rest}) {
     const data = {
       attachment: {
         type: 'file',
@@ -58,12 +58,12 @@ class FBMessenger {
         }
       }
     }
-    return this.sendMessage({id, data, notificationType})
+    return this.sendMessage({id, data, ...rest})
   }
 
   // START TEMPLATES
 
-  async sendQuickRepliesMessage ({id, attachment, quickReplies, notificationType}) {
+  async sendQuickRepliesMessage ({id, attachment, quickReplies, ...rest}) {
     const attachmentType = typeof attachment === 'string' ? 'text' : 'attachment'
     const attachmentObject = typeof attachment === 'string' ? attachment : {
       type: 'template',
@@ -76,10 +76,10 @@ class FBMessenger {
       [attachmentType]: attachmentObject,
       quick_replies: quickReplies
     }
-    return this.sendMessage({id, data, notificationType})
+    return this.sendMessage({id, data, ...rest})
   }
 
-  async sendButtonsMessage ({id, text, buttons, notificationType}) {
+  async sendButtonsMessage ({id, text, buttons, ...rest}) {
     const data = {
       attachment: {
         type: 'template',
@@ -90,10 +90,10 @@ class FBMessenger {
         }
       }
     }
-    return this.sendMessage({id, data, notificationType})
+    return this.sendMessage({id, data, ...rest})
   }
 
-  async sendGenericMessage ({id, elements, notificationType}) {
+  async sendGenericMessage ({id, elements, ...rest}) {
     const data = {
       attachment: {
         type: 'template',
@@ -103,10 +103,10 @@ class FBMessenger {
         }
       }
     }
-    return this.sendMessage({id, data, notificationType})
+    return this.sendMessage({id, data, ...rest})
   }
 
-  async sendListMessage ({id, elements, buttons = [], topElementStyle = 'large', notificationType}) {
+  async sendListMessage ({id, elements, buttons = [], topElementStyle = 'large', ...rest}) {
     const data = {
       attachment: {
         type: 'template',
@@ -118,10 +118,10 @@ class FBMessenger {
         }
       }
     }
-    return this.sendMessage({id, data, notificationType})
+    return this.sendMessage({id, data, ...rest})
   }
 
-  async sendMediaMessage ({id, elements, notificationType}) {
+  async sendMediaMessage ({id, elements, ...rest}) {
     const data = {
       attachment: {
         type: 'template',
@@ -131,10 +131,10 @@ class FBMessenger {
         }
       }
     }
-    return this.sendMessage({id, data, notificationType})
+    return this.sendMessage({id, data, ...rest})
   }
 
-  async sendOpenGraphMessage ({id, elements, notificationType}) {
+  async sendOpenGraphMessage ({id, elements, ...rest}) {
     const data = {
       attachment: {
         type: 'template',
@@ -144,10 +144,10 @@ class FBMessenger {
         }
       }
     }
-    return this.sendMessage({id, data, notificationType})
+    return this.sendMessage({id, data, ...rest})
   }
 
-  async sendReceiptMessage ({id, payload, notificationType}) {
+  async sendReceiptMessage ({id, payload, ...rest}) {
     const data = {
       attachment: {
         type: 'template',
@@ -157,7 +157,7 @@ class FBMessenger {
         }
       }
     }
-    return this.sendMessage({id, data, notificationType})
+    return this.sendMessage({id, data, ...rest})
   }
 
   // END TEMPLATES
@@ -166,7 +166,7 @@ class FBMessenger {
     return this.sendMessage({id, data: action})
   }
 
-  async sendMessage ({id, data, notificationType = this.notificationType}) {
+  async sendMessage ({id, data, ...rest}) {
     const body = {
       recipient: {
         id
@@ -177,10 +177,10 @@ class FBMessenger {
       body.sender_action = data
     } else {
       body.message = data
-      body.notification_type = notificationType
+      body.notification_type = rest.notificationType || this.notificationType
     }
 
-    return (await fetch(`https://graph.facebook.com/v2.6/me/messages?access_token=${this.token}`,
+    return (await fetch(`https://graph.facebook.com/v2.6/me/messages?access_token=${rest.token || this.token}`,
       {
         method: 'POST',
         headers: {
@@ -192,8 +192,8 @@ class FBMessenger {
 
   // GET PROFILE
 
-  async getProfile (id) {
-    return (await fetch(`https://graph.facebook.com/v2.6/${id}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=${this.token}`,
+  async getProfile ({id, ...rest}) {
+    return (await fetch(`https://graph.facebook.com/v2.6/${id}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=${rest.token || this.token}`,
       {
         method: 'GET',
         headers: {
@@ -204,7 +204,7 @@ class FBMessenger {
 
   // START THREAD SETTINGS
 
-  async setWelcomeMessage ({pageId, message}) {
+  async setWelcomeMessage ({pageId, message, ...rest}) {
     if (typeof message === 'string') {
       message = {
         text: message
@@ -224,39 +224,39 @@ class FBMessenger {
         message: message
       }]
     }
-    this.sendThreadSettingsMessage({pageId, body})
+    this.sendThreadSettingsMessage({pageId, body, ...rest})
   }
 
-  async setGreetingText ({pageId, message}) {
+  async setGreetingText ({pageId, message, ...rest}) {
     const body = {
       setting_type: 'greeting',
       greeting: {
         text: message
       }
     }
-    return this.sendThreadSettingsMessage({pageId, body})
+    return this.sendThreadSettingsMessage({pageId, body, ...rest})
   }
 
-  async setPersistentMenu ({pageId, menuItems}) {
+  async setPersistentMenu ({pageId, menuItems, ...rest}) {
     const body = {
       setting_type: 'call_to_actions',
       thread_state: 'existing_thread',
       call_to_actions: menuItems
     }
-    return this.sendThreadSettingsMessage({pageId, body})
+    return this.sendThreadSettingsMessage({pageId, body, ...rest})
   }
 
-  async setDomainWhitelist ({pageId, domains}) {
+  async setDomainWhitelist ({pageId, domains, ...rest}) {
     const body = {
       setting_type: `domain_whitelisting`,
       whitelisted_domains: domains,
       domain_action_type: `add`
     }
-    return this.sendThreadSettingsMessage({pageId, body})
+    return this.sendThreadSettingsMessage({pageId, body, ...rest})
   }
 
-  async sendThreadSettingsMessage ({pageId, body}) {
-    return (await fetch(`https://graph.facebook.com/v2.6/${pageId}/thread_settings?${this.token}`,
+  async sendThreadSettingsMessage ({pageId, body, ...rest}) {
+    return (await fetch(`https://graph.facebook.com/v2.6/${pageId}/thread_settings?${rest.token || this.token}`,
       {
         method: 'POST',
         headers: {

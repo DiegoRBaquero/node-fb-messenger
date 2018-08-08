@@ -18,48 +18,49 @@ You must require fb-messenger and create an instance
 ```js
 // Constructor
 const FBMessenger = require('fb-messenger')
-const messenger = new FBMessenger({token, notificationType}) // notificationType is optional, default = 'REGULAR'
+const messenger = new FBMessenger({token, notificationType})
+// token is optional, if not included, must be sent in each method, notificationType is optional, default = 'REGULAR'
 
-// Methods (notificationType is optional)
-messenger.sendTextMessage({id, message, notificationType}) // Sends a text message
+// Methods (notificationType and token are optional)
+messenger.sendTextMessage({id, message, notificationType, token}) // Sends a text message
 
-messenger.sendAudioMessage({id, url, notificationType}) // Sends an audio from URL
+messenger.sendAudioMessage({id, url, notificationType, token}) // Sends an audio from URL
 
-messenger.sendVideoMessage({id, url, notificationType}) // Sends an video from URL
+messenger.sendVideoMessage({id, url, notificationType, token}) // Sends an video from URL
 
-messenger.sendImageMessage({id, url, notificationType}) // Sends an image from URL
+messenger.sendImageMessage({id, url, notificationType, token}) // Sends an image from URL
 
-messenger.sendFileMessage({id, url, notificationType}) // Sends an file from URL
+messenger.sendFileMessage({id, url, notificationType, token}) // Sends an file from URL
 
-messenger.sendQuickRepliesMessage({id, attachment, quickReplies, notificationType}) // Sends a Quick Replies Message
+messenger.sendQuickRepliesMessage({id, attachment, quickReplies, notificationType, token}) // Sends a Quick Replies Message
 
-messenger.sendButtonsMessage({id, message, buttons, notificationType}) // Sends a buttons template message
+messenger.sendButtonsMessage({id, message, buttons, notificationType, token}) // Sends a buttons template message
 
-messenger.sendGenericMessage({id, elements, notificationType}) // Sends a generic template message
+messenger.sendGenericMessage({id, elements, notificationType, token}) // Sends a generic template message
 
-messenger.sendListMessage({id, elements, buttons, top_element_type, notificationType}) // Sends a list template message
+messenger.sendListMessage({id, elements, buttons, top_element_type, notificationType, token}) // Sends a list template message
 
-messenger.sendMediaMessage({id, elements, notificationType}) // Sends a media template message
+messenger.sendMediaMessage({id, elements, notificationType, token}) // Sends a media template message
 
-messenger.sendOpenGraphMessage({id, elements, notificationType}) // Sends an open graph template message
+messenger.sendOpenGraphMessage({id, elements, notificationType, token}) // Sends an open graph template message
 
-messenger.sendReceiptMessage({id, payload, notificationType}) // Sends a receipt template message (No need for template_type in payload) 
+messenger.sendReceiptMessage({id, payload, notificationType, token}) // Sends a receipt template message (No need for template_type in payload) 
 
-messenger.sendAction({id, actionType}) // Send an action type (One of 'mark_seen', 'typing_on', 'typing_off')
+messenger.sendAction({id, actionType, token}) // Send an action type (One of 'mark_seen', 'typing_on', 'typing_off')
 
-messenger.sendMessage({id, data, notificationType}) // Send a message from custom data
+messenger.sendMessage({id, data, notificationType, token}) // Send a message from custom data
 
-messenger.getProfile(id) // Gets user information
+messenger.getProfile({id, token}) // Gets user information
 
-messenger.setWelcomeMessage({pageId, message}) // Sets Page's Welcome Message (message can be a text string or a strucuted message)
+messenger.setWelcomeMessage({pageId, message, token}) // Sets Page's Welcome Message (message can be a text string or a strucuted message)
 
-messenger.setGreetingText ({pageId, message}) // Sets Page's Greeting Text
+messenger.setGreetingText ({pageId, message, token}) // Sets Page's Greeting Text
 
-messenger.setPersistentMenu ({pageId, menuItems}) // Set's Page's Persistent Menu
+messenger.setPersistentMenu ({pageId, menuItems, token}) // Set's Page's Persistent Menu
 
-messenger.setDomainWhitelist ({pageId, domains}) // Set's Page's Whitelisted Domains 
+messenger.setDomainWhitelist ({pageId, domains, token}) // Set's Page's Whitelisted Domains 
 
-messenger.sendThreadSettingsMessage ({pageId, body}) // Send Manually Page's Thread Settings
+messenger.sendThreadSettingsMessage ({pageId, body, token}) // Send Manually Page's Thread Settings
 ```
 
 #### Notification Types:
@@ -73,7 +74,7 @@ messenger.sendThreadSettingsMessage ({pageId, body}) // Send Manually Page's Thr
 
 ```js
 const FBMessenger = require('fb-messenger')
-const messenger = new FBMessenger({token: '<YOUR TOKEN>'})
+const messenger = new FBMessenger({token: '<YOUR TOKEN>'}) // Will always use this page's token for request unless sent on each method
 
 messenger.sendTextMessage({id: '<ID>', text: 'Hello'})
 ```
@@ -129,6 +130,8 @@ try {
 } catch(e) {
   console.error(e)
 }
+
+messenger.sendTextMessage({id: '<ID>', text: 'Hello', token: '<YOUR OTHER TOKEN>'}) // Send message on another page
 ```
 
 ## License
