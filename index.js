@@ -177,7 +177,16 @@ class FBMessenger {
       body.sender_action = data
     } else {
       body.message = data
-      body.notification_type = rest.notificationType || this.notificationType
+
+      const notificationType = rest.notificationType || this.notificationType
+      if (notificationType !== 'REGULAR') { // Only include it if not default
+        body.notification_type = notificationType
+      }
+    }
+
+    if (rest.tag) { // https://developers.facebook.com/docs/messenger-platform/send-messages/message-tags
+      body.messaging_type = 'MESSAGE_TAG'
+      body.tag = rest.tag
     }
 
     return (await fetch(`https://graph.facebook.com/v2.6/me/messages?access_token=${rest.token || this.token}`,
