@@ -6,6 +6,14 @@ class FBMessenger {
     this.notificationType = notificationType
   }
 
+  setToken (token) {
+    this.token = token
+  }
+
+  setNotificationType (notificationType = 'REGULAR') {
+    this.notificationType = notificationType
+  }
+
   async sendTextMessage ({id, text, ...rest}) {
     const data = {
       text

@@ -21,6 +21,10 @@ const FBMessenger = require('fb-messenger')
 const messenger = new FBMessenger({token, notificationType})
 // token is optional, if not included, must be sent in each method, notificationType is optional, default = 'REGULAR'
 
+messenger.setToken(token) // Sets the instance token
+
+messenger.setNotificationType(notificationType) // Sets the instance notificationType
+
 // Methods (notificationType and token are optional)
 messenger.sendTextMessage({id, message, notificationType, token}) // Sends a text message
 
