@@ -1,7 +1,7 @@
 const fetch = require('node-fetch')
 
 class FBMessenger {
-  constructor ({token, notificationType = 'REGULAR'}) {
+  constructor ({token, notificationType = 'REGULAR'} = {}) {
     this.token = token
     this.notificationType = notificationType
   }
