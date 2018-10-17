@@ -255,12 +255,14 @@ class FBMessenger {
   }
 
   async setPersistentMenu ({pageId, menuItems, ...rest}) {
-    const body = {
-      setting_type: 'call_to_actions',
-      thread_state: 'existing_thread',
-      call_to_actions: menuItems
-    }
-    return this.sendThreadSettingsMessage({pageId, body, ...rest})
+    return (await fetch(`https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${rest.token || this.token}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(menuItems)
+      })).json()
   }
 
   async setDomainWhitelist ({pageId, domains, ...rest}) {
