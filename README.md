@@ -65,6 +65,8 @@ messenger.setPersistentMenu ({pageId, menuItems, token}) // Set's Page's Persist
 messenger.setDomainWhitelist ({pageId, domains, token}) // Set's Page's Whitelisted Domains 
 
 messenger.sendThreadSettingsMessage ({pageId, body, token}) // Send Manually Page's Thread Settings
+
+messenger.sendMessengerProfileMessage ({ body, token }) // Send Messenger Profile API
 ```
 
 #### Notification Types:

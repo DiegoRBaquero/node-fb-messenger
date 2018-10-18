@@ -221,61 +221,61 @@ class FBMessenger {
 
   // START THREAD SETTINGS
 
+  // deprecated api
   async setWelcomeMessage ({pageId, message, ...rest}) {
-    if (typeof message === 'string') {
-      message = {
-        text: message
-      }
-    } else {
-      message = {
-        attachment: {
-          type: 'template',
-          payload: message
-        }
-      }
-    }
     const body = {
-      setting_type: 'call_to_actions',
-      thread_state: 'new_thread',
-      call_to_actions: [{
-        message: message
-      }]
+      get_started: {
+        payload: message
+      }
     }
-    this.sendThreadSettingsMessage({pageId, body, ...rest})
+    return this.sendMessengerProfileMessage({ body, ...rest })
   }
 
+  // deprecated api
   async setGreetingText ({pageId, message, ...rest}) {
     const body = {
-      setting_type: 'greeting',
-      greeting: {
-        text: message
-      }
+      greeting: [
+        {
+          locale: 'default',
+          text: message
+        }
+      ]
     }
-    return this.sendThreadSettingsMessage({pageId, body, ...rest})
+    return this.sendMessengerProfileMessage({ body, ...rest })
   }
 
+  // deprecated api
   async setPersistentMenu ({pageId, menuItems, ...rest}) {
-    return (await fetch(`https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${rest.token || this.token}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(menuItems)
-      })).json()
+    const body = {
+      persistent_menu: [
+        {
+          locale: 'default',
+          composer_input_disabled: true,
+          call_to_actions: menuItems,
+        }
+      ]
+    }
+    return this.sendMessengerProfileMessage({ body, ...rest })
   }
 
+  // deprecated api
   async setDomainWhitelist ({pageId, domains, ...rest}) {
     const body = {
-      setting_type: `domain_whitelisting`,
-      whitelisted_domains: domains,
-      domain_action_type: `add`
+      whitelisted_domains: domains
     }
-    return this.sendThreadSettingsMessage({pageId, body, ...rest})
+    return this.sendMessengerProfileMessage({ body, ...rest })
   }
 
   async sendThreadSettingsMessage ({pageId, body, ...rest}) {
-    return (await fetch(`https://graph.facebook.com/v2.6/${pageId}/thread_settings?${rest.token || this.token}`,
+    return this.sendMessengerProfileMessage({body, ...rest})
+  }
+
+  // END THREAD SETTINGS
+
+  // START MESSENGER PROFILE SETTING
+
+  async sendMessengerProfileMessage ({body, ...rest}) {
+    return (await fetch(`https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${rest.token || this.token}`,
       {
         method: 'POST',
         headers: {
@@ -285,7 +285,7 @@ class FBMessenger {
       })).json()
   }
 
-  // END THREAD SETTINGS
+  // END MESSENGER PROFILE SETTING
 }
 
 module.exports = FBMessenger
