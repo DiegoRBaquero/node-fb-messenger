@@ -51,7 +51,7 @@ messenger.sendOpenGraphMessage({id, elements, notificationType, tag, token}) // 
 
 messenger.sendReceiptMessage({id, payload, notificationType, tag, token}) // Sends a receipt template message (No need for template_type in payload) 
 
-messenger.sendAction({id, actionType, token}) // Send an action type (One of 'mark_seen', 'typing_on', 'typing_off')
+messenger.sendAction({id, action, token}) // Send an action type (One of 'mark_seen', 'typing_on', 'typing_off')
 
 messenger.sendMessage({id, data, notificationType, tag, token}) // Send a message from custom data
 
