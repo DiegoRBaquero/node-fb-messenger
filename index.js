@@ -1,9 +1,12 @@
 const fetch = require('node-fetch')
 
 class FBMessenger {
-  constructor ({token, notificationType = 'REGULAR'} = {}) {
+  constructor ({token, notificationType = 'REGULAR', tag} = {}) {
     this.token = token
     this.notificationType = notificationType
+    if (tag) {
+      this.defaultTag = tag
+    }
   }
 
   setToken (token) {
@@ -192,9 +195,10 @@ class FBMessenger {
       }
     }
 
-    if (rest.tag) { // https://developers.facebook.com/docs/messenger-platform/send-messages/message-tags
+    const tag = rest.tag || this.defaultTag
+    if (tag) { // https://developers.facebook.com/docs/messenger-platform/send-messages/message-tags
       body.messaging_type = 'MESSAGE_TAG'
-      body.tag = rest.tag
+      body.tag = tag
     }
 
     return (await fetch(`https://graph.facebook.com/v2.6/me/messages?access_token=${rest.token || this.token}`,
