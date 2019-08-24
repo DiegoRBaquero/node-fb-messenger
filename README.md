@@ -18,41 +18,42 @@ You must require fb-messenger and create an instance
 ```js
 // Constructor
 const FBMessenger = require('fb-messenger')
-const messenger = new FBMessenger({token, notificationType})
+const messenger = new FBMessenger({token, notificationType, tag})
 // token is optional, if not included, must be sent in each method, notificationType is optional, default = 'REGULAR'
+// tag is optional
 
 messenger.setToken(token) // Sets the instance token
 
 messenger.setNotificationType(notificationType) // Sets the instance notificationType
 
-// Methods (notificationType and token are optional)
-messenger.sendTextMessage({id, message, notificationType, token}) // Sends a text message
+// Methods (notificationType, tag and token are optional)
+messenger.sendTextMessage({id, message, notificationType, tag, token}) // Sends a text message
 
-messenger.sendAudioMessage({id, url, notificationType, token}) // Sends an audio from URL
+messenger.sendAudioMessage({id, url, notificationType, tag, token}) // Sends an audio from URL
 
-messenger.sendVideoMessage({id, url, notificationType, token}) // Sends an video from URL
+messenger.sendVideoMessage({id, url, notificationType, tag, token}) // Sends an video from URL
 
-messenger.sendImageMessage({id, url, notificationType, token}) // Sends an image from URL
+messenger.sendImageMessage({id, url, notificationType, tag, token}) // Sends an image from URL
 
-messenger.sendFileMessage({id, url, notificationType, token}) // Sends an file from URL
+messenger.sendFileMessage({id, url, notificationType, tag, token}) // Sends an file from URL
 
-messenger.sendQuickRepliesMessage({id, attachment, quickReplies, notificationType, token}) // Sends a Quick Replies Message
+messenger.sendQuickRepliesMessage({id, attachment, quickReplies, notificationType, tag, token}) // Sends a Quick Replies Message
 
-messenger.sendButtonsMessage({id, message, buttons, notificationType, token}) // Sends a buttons template message
+messenger.sendButtonsMessage({id, message, buttons, notificationType, tag, token}) // Sends a buttons template message
 
-messenger.sendGenericMessage({id, elements, notificationType, token}) // Sends a generic template message
+messenger.sendGenericMessage({id, elements, notificationType, tag, token}) // Sends a generic template message
 
-messenger.sendListMessage({id, elements, buttons, top_element_type, notificationType, token}) // Sends a list template message
+messenger.sendListMessage({id, elements, buttons, top_element_type, notificationType, tag, token}) // Sends a list template message
 
-messenger.sendMediaMessage({id, elements, notificationType, token}) // Sends a media template message
+messenger.sendMediaMessage({id, elements, notificationType, tag, token}) // Sends a media template message
 
-messenger.sendOpenGraphMessage({id, elements, notificationType, token}) // Sends an open graph template message
+messenger.sendOpenGraphMessage({id, elements, notificationType, tag, token}) // Sends an open graph template message
 
-messenger.sendReceiptMessage({id, payload, notificationType, token}) // Sends a receipt template message (No need for template_type in payload) 
+messenger.sendReceiptMessage({id, payload, notificationType, tag, token}) // Sends a receipt template message (No need for template_type in payload) 
 
-messenger.sendAction({id, actionType, token}) // Send an action type (One of 'mark_seen', 'typing_on', 'typing_off')
+messenger.sendAction({id, action, token}) // Send an action type (One of 'mark_seen', 'typing_on', 'typing_off')
 
-messenger.sendMessage({id, data, notificationType, token}) // Send a message from custom data
+messenger.sendMessage({id, data, notificationType, tag, token}) // Send a message from custom data
 
 messenger.getProfile({id, token}) // Gets user information
 
@@ -71,6 +72,26 @@ messenger.sendThreadSettingsMessage ({pageId, body, token}) // Send Manually Pag
  - REGULAR
  - SILENT_PUSH
  - NO_PUSH
+
+#### Tag Types:
+More info https://developers.facebook.com/docs/messenger-platform/send-messages/message-tags
+ - BUSINESS_PRODUCTIVITY
+ - COMMUNITY_ALERT
+ - CONFIRMED_EVENT_REMINDER
+ - NON_PROMOTIONAL_SUBSCRIPTION
+ - PAIRING_UPDATE
+ - APPLICATION_UPDATE
+ - ACCOUNT_UPDATE
+ - PAYMENT_UPDATE
+ - PERSONAL_FINANCE_UPDATE
+ - SHIPPING_UPDATE
+ - RESERVATION_UPDATE
+ - ISSUE_RESOLUTION
+ - APPOINTMENT_UPDATE
+ - GAME_EVENT
+ - TRANSPORTATION_UPDATE
+ - FEATURE_FUNCTIONALITY_UPDATE
+ - TICKET_UPDATE
 
 ## Examples
 
@@ -117,7 +138,7 @@ const messenger = new FBMessenger({token: '<YOUR TOKEN>', notificationType: 'SIL
 
 ```js
 const FBMessenger = require('fb-messenger')
-const messenger = new FBMessenger({token: '<YOUR TOKEN>', notificationType: 'NO_PUSH'})
+const messenger = new FBMessenger({token: '<YOUR TOKEN>', notificationType: 'NO_PUSH', tag: 'BUSINESS_PRODUCTIVITY'})
 
 try {
   await messenger.sendTextMessage({id: '<ID>', text: 'Hello'}) // Send a message with NO_PUSH, ignoring response
@@ -126,9 +147,9 @@ try {
   console.error(e)
 }
 
-// Send an image overriding default notification type with callback
+// Send an image overriding default notification type and previously defined tag with callback
 try {
-  const response = await messenger.sendImageMessage({id: '<ID>', url: '<IMG URL>', notificationType: 'REGULAR'})
+  const response = await messenger.sendImageMessage({id: '<ID>', url: '<IMG URL>', notificationType: 'REGULAR', tag: 'COMMUNITY_ALERT'})
   console.log('Sent image, response:')
   console.dir(response)
 } catch(e) {
