@@ -18,7 +18,7 @@
   "author": "Diego Rodríguez Baquero <diegorbaquero@gmail.com> (https://diegorbaquero.com)",
   "license": "MIT",
   "devDependencies": {
-    "standard": "^14.0.0"
+    "standard": "^14.1.0"
   },
   "dependencies": {
     "node-fetch": "^2.2.0"
